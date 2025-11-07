@@ -16,9 +16,9 @@ RUN sed -i 's/^    "npm": "^9.5.0"/    "npm": ">=9.5.0"/' package.json
 RUN npm config fix
 RUN npm clean-install --ignore-scripts --no-audit --verbose && npm run build && npm run dist
 
-FROM registry.redhat.io/ubi9/nodejs-20-minimal:latest
+FROM registry.redhat.io/ubi9/nodejs-20:latest
 USER root
-RUN microdnf -y install procps-ng && microdnf -y clean all
+RUN dnf -y install procps-ng && dnf -y clean all
 USER 1001
 
 COPY --from=builder /workspace/dist /opt/app-root/dist/
